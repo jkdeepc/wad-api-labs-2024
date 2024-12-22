@@ -15,3 +15,19 @@ export const getUpcomingMovies = async () => {
         throw error;
     }
 };
+export const getGenres = async () => {
+    try {
+        const response = await fetch(
+            `https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.TMDB_KEY}&language=en-US`
+        );
+
+        if (!response.ok) {
+            throw new Error(response.json().message);
+        }
+
+        const data = await response.json();
+        return data.genres; // 返回流派列表
+    } catch (error) {
+        throw new Error('Failed to fetch genres: ' + error.message);
+    }
+};
